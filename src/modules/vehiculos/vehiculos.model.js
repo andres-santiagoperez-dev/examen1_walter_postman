@@ -33,7 +33,24 @@ export const UserModel = {
     if (placaExiste.length > 0) {
       throw new Error("La placa ya está registrado");
       }
-    const vehiculoNuevo = {
+      if(data.fecha_ingreso=="")
+      {
+        const vehiculoNuevo = {
+      placa:data.placa,
+      marca:data.marca,
+      modelo:data.modelo,
+      anio:data.anio,
+      color:data.color,
+      kilometraje:data.kilometraje,
+      propietario:data.propietario,
+      telefono_propietario:data.telefono_propietario,
+      estado:data.estado,
+      fecha_ingreso:"NOW()"
+    };
+      }
+      else
+      {
+        const vehiculoNuevo = {
       placa:data.placa,
       marca:data.marca,
       modelo:data.modelo,
@@ -45,6 +62,8 @@ export const UserModel = {
       estado:data.estado,
       fecha_ingreso:data.fecha_ingreso
     };
+      }
+    
     const sql = "INSERT INTO vehiculos SET ?";
     const [rows] = await db.query(sql, [vehiculoNuevo]);
     return rows;
